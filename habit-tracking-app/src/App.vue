@@ -1,108 +1,51 @@
-<template>
-  <div id="app">
-    <main>
-      <router-view></router-view>
-      <div class="content-container">
-        <div>
-          <MainContent class="content"/>
-        </div>
-        <div >
-          <HelpContent v-if="showHelpInfo" :class="'help-content'"/>
-        </div>
-        <div v-if="addHabit" :class="'add-habit-content'">
-          <useAddHabit />
-        </div>
-      </div>
-      <button @click="toggleAddHabit" class="addHabit-button">Add habit</button>
-      <button @click="toggleHelpContent" class="help-button">
-        Help
-      </button>
-    </main>
-    <Footer />
+<script setup>
+import { RouterView, RouterLink } from 'vue-router';
+import Calendar from './components/main_content/calendar/Calendar.vue'
+import HabitTracking from './components/main_content/habit_tracking/HabitTracking.vue'
+</script>
 
+<template>
+  <div id="app" class="flex-container">
+    <div id="add-habit-container" class="add-habit-content">
+          <router-link :to="{name: 'addHabit'}">Add Habit</router-link>
+        </div>
+        <div class="router-view-container">
+          <router-view />
+        </div>
+    <div id="main-content-container">
+        <Calendar />
+        <HabitTracking />
+    </div>
   </div>
 </template>
 
-<script setup>
-import MainContent from './components/main/MainContent.vue'
-import Footer from './components/footer/Footer.vue'
-import HelpContent from './components/main/HelpContent.vue'
-import useAddHabit from './components/main/AddHabit/useAddHabit.vue'
-import router from './router.js'
-import { ref } from 'vue'
-
-
-let showHelpInfo = ref(false)
-let addHabit = ref(false)
-
-const toggleHelpContent = () => {
-  showHelpInfo.value = !showHelpInfo.value;
-  if (showHelpInfo.value) {
-    router.push('/help');
-  }
-};
-
-const toggleAddHabit = () => {
-  addHabit.value = !addHabit.value;
-  if (addHabit.value) {
-    router.push('/addHabit')
-  }
-}
-
-</script>
-
-
-<style scoped>
-
+<style>
 #app {
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  height: 100vh;
 }
 
-main {
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#main-content-container {
+  position: relative;
+  display: flex;
+}
+
+
+#add-habit-container {
   flex: 1;
+  background-color: lightgray;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.content-container {
-  display: flex;
-  align-items: flex-start;
-}
-
-.content {
+.router-view-container {
   flex: 1;
   padding: 20px;
-}
-
-.help-content, .add-habit-content {
-  flex: 1;
-  padding: 20px;
-  background-color: #ffcab0;
-  color: black;
-}
-
-.help-button {
-  position: fixed;
-  bottom: 50px;
-  left: 10px;
-  z-index: 1;
-  border: 1px solid black;
-  background-color: #ffebbb;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-}
-
-.addHabit-button {
-  position: fixed;
-  top: 100px;
-  bottom: 50px;
-  left: 1800px;
-  z-index: 1;
-  border: 1px solid black;
-  background-color: #ffebbb;
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
+  box-sizing: border-box;
 }
 </style>

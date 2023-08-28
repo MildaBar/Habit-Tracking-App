@@ -1,6 +1,9 @@
-<template>
+<script setup>
 
-<div class="my-element">
+</script>
+
+<template>
+    <div class="my-element">
     <div class="box">Prev</div>
     <div class="box">Mon</div>
     <div class="box">Tue</div>
@@ -11,15 +14,9 @@
     <div class="box">Sun</div>
     <div class="box">Next</div>
 </div>
-
 </template>
 
-<script setup>
-
-</script>
-
 <style scoped>
-
 .my-element {
   display: flex;
   flex-direction: row;
@@ -43,5 +40,4 @@
     padding: 10px;
     text-align: center;
 }
-
 </style>
