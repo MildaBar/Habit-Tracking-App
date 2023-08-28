@@ -1,12 +1,11 @@
 <script setup>
 import {ref} from 'vue'
-import { useCategoryStore } from '../add_habits/store.js'
+import { useCategoryStore } from '../add_habits/storeCategory.js'
 
 const categoryStore = useCategoryStore()
 const categories = categoryStore.categories
 
 const selected = ref('')
-const allCategories = ref('')
 const selectedCategories = ref('')
 
 </script>

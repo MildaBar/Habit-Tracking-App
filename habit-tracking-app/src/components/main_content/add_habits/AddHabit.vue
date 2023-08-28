@@ -1,32 +1,3 @@
-<script setup>
-import { RouterView, RouterLink } from 'vue-router';
-import { ref, computed } from 'vue'
-import { useCategoryStore, useHabitStore } from './store'
-
-const categoryStore = useCategoryStore()
-const category = ref('')
-
-const selected = ref('')
-const habit = ref('')
-
-const addNewCategory = () => {
-    if (category.value.trim() !== '') {
-        categoryStore.addCategory(category.value);
-        category.value = '';
-    }
-}
-
-const addNewHabit = () => {
-    if (habit.value.trim() !== '' && selected.value) {
-        useHabitStore().addHabit({ habit: habit.value, category: selected.value});
-        habit.value = ''
-    }
-}
-
-const categories = computed(() => useCategoryStore().categories)
-
-</script>
-
 <template>
      <section id="add-habit-container">
         <h1>ADD NEW HABIT</h1>
@@ -34,7 +5,7 @@ const categories = computed(() => useCategoryStore().categories)
         <h2>Select from habit category list:</h2>
         <select v-model="selected" id="select-category">
             <option disabled value="">Select habit category</option>
-            <option v-for="newCat in categories" :value="newCat.name">{{ newCat.name }}</option>
+            <option v-for="newCat in categories" :value="newCat">{{ newCat }}</option>
         </select>
 
         <br>
@@ -61,6 +32,40 @@ const categories = computed(() => useCategoryStore().categories)
     </section>
     <router-view />
 </template>
+
+<script setup>
+import { RouterView, RouterLink } from 'vue-router';
+import { ref, computed } from 'vue'
+import { useAppStore } from '../store';
+
+const appStore = useAppStore()
+const category = ref('')
+
+const selected = ref('')
+const habit = ref('')
+
+const addNewCategory = () => {
+    if (category.value.trim() !== '') {
+        appStore.addCategory(category.value);
+        category.value = '';
+        console.log(appStore.categories);
+    }
+}
+
+const addNewHabit = () => {
+    if (habit.value.trim() && selected.value !== '' ) {
+        appStore.addHabitToDay ({
+            habit: habit.value,
+            category: selected.value,
+            day: appStore.selectedDay,
+        });
+        habit.value = ''
+    }
+}
+
+const categories = computed(() => appStore.categories)
+
+</script>
 
 <style scoped>
 
