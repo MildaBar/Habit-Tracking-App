@@ -7,8 +7,8 @@ import HabitTracking from './components/main_content/habit_tracking/HabitTrackin
 <template>
   <div id="app" class="flex-container">
     <div id="add-habit-container" class="add-habit-content">
-          <router-link :to="{name: 'addHabit'}">Add Habit</router-link>
-        </div>
+      <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
+    </div>
         <div class="router-view-container">
           <router-view />
         </div>
@@ -23,6 +23,7 @@ import HabitTracking from './components/main_content/habit_tracking/HabitTrackin
 #app {
   display: flex;
   height: 100vh;
+  font-family: monospace;
 }
 
 .flex-container {
@@ -35,17 +36,34 @@ import HabitTracking from './components/main_content/habit_tracking/HabitTrackin
   display: flex;
 }
 
-
-#add-habit-container {
-  flex: 1;
-  background-color: lightgray;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
 .router-view-container {
   flex: 1;
   padding: 20px;
   box-sizing: border-box;
 }
+
+/* Add habit button */
+.add-habit-content {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+  background: #fbf2d5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#add-habit-link {
+  text-decoration: none;
+  color: black;
+}
+
+.add-habit-content:hover {
+  transform: scale(1.3);
+  background-color: #fbf2d5;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+  border: 1px solid black;
+}
+
 </style>

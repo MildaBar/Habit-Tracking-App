@@ -1,25 +1,22 @@
 <template>
-    <div class="my-element">
-        <div class="box">Prev</div>
-        <div class="box" v-for="(day, index) in days" :key="index" @click="selectDay(day)">{{ day }}</div>
-        <div class="box">Next</div>
-
-        <div>
-            <h3> Habits for {{ appStore.selectedDay }}</h3>
+    <section id="calendar-section">
+        <div class="calendar-container">
+            <div class="box">Prev</div>
+            <div class="box" v-for="(day, index) in days" :key="index" @click="selectDay(day)">{{ day }}</div>
+            <div class="box">Next</div>
         </div>
-
-        <div class="habitList">
-            <label for="habitList">HABIT LIST</label>
-            <div class="habitList">
-                <p v-for="(habit, index) in habitsForSelectedDay" :key="index">{{  habit.habit }} (Category: {{ habit.category }})
-                </p>
-            </div>
+        <div class="habit-list">
+            <h3> Habits for {{ appStore.selectedDay }}</h3>
+        <div class="habit-item" v-for="(habit, index) in habitsForSelectedDay" :key="index">
+            <p>{{  habit.habit }} (Category: {{ habit.category }})
+            </p>
         </div>
     </div>
+    </section>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useAppStore } from '../store';
 
 const appStore = useAppStore()
@@ -38,32 +35,44 @@ const habitsForSelectedDay = computed(() => {
 </script>
 
 <style scoped>
-.my-element {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-}
 
-.my-element {
+#calendar-section {
     display: flex;
-    color: black;
-    border: 1px solid black;
-    width: 100%;
-    height: 100%;
-    position: relative;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+
+}
+.calendar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .box {
     border: 1px solid black;
-    padding: 10px;
-    text-align: center;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 
-.habitList {
-    border: 1px solid black;
-    font-size: 20px
+.habit-list {
+    text-align: center;
+    background-color: #394a51;
+    width: 100%;
+    height: 100%;
+}
+
+.habit-list h3 {
+    color: white;
+    text-transform: uppercase;
+}
+
+.habit-item {
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+
 }
 </style>
