@@ -1,23 +1,21 @@
 <template>
   <div id="choose-category">
-      <h2>Habit list</h2>
-      <div class="category-options">
-          <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
-          <label for="allCategories">All Categories</label>
+    <h2>Habit list</h2>
+    <div class="category-options">
+      <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
+      <label for="allCategories">All Categories</label>
 
-          <input type="radio" id="selected-categories" value="selected" v-model="selectedCategories">
-          <label for="selected-categories">Selected Categories</label>
-      </div>
+      <input type="radio" id="selected-categories" value="selected" v-model="selectedCategories">
+      <label for="selected-categories">Selected Categories</label>
+    </div>
 
-      <div v-if="selectedCategories === 'selected'" id="category-checkboxes">
-          <label v-for="newCat in appStore.categories" :key="newCat">
-              <input type="checkbox" v-model="selectedCategoryCheckboxes" :value="newCat">
-              {{ newCat }}
-          </label>
-      </div>
-
-      <br>
+    <div v-if="selectedCategories === 'selected'" class="category-checkboxes">
+      <label v-for="newCat in appStore.categories" :key="newCat">
+        <input type="checkbox" v-model="selectedCategoryCheckboxes" :value="newCat">
+        {{ newCat }}
+      </label>
       <span>Selected categories: {{ selectedCategoryCheckboxes }}</span>
+    </div>
   </div>
 </template>
 
@@ -30,9 +28,10 @@ const appStore = useAppStore();
 const selectedCategories = ref('all');
 const selectedCategoryCheckboxes = ref([]);
 const computedSelected = ref('');
+const allCategories = ref([])
 
 if (selectedCategories.value === 'all') {
-  computedSelected.value = 'All Categories';
+  computedSelected.value = appStore.categories.join(', ')
 } else if (selectedCategories.value === 'selected') {
   computedSelected.value = appStore.categories
       .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
@@ -42,6 +41,7 @@ if (selectedCategories.value === 'all') {
 
 
 watch(selectedCategoryCheckboxes, () => {
+  appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
   computedSelected.value = appStore.categories
       .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
       .map(cat => cat.name)
@@ -53,9 +53,9 @@ watch(selectedCategoryCheckboxes, () => {
 <style scoped>
 
 #choose-category {
-  padding: 20px;
-  border: 1px solid #ccc;
-  background-color: #7fa99b;
+  border: 1px solid black;
+  border-style: dashed;
+  padding: 10px;
 }
 
 .category-options {

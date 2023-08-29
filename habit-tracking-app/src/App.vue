@@ -4,17 +4,20 @@ import Calendar from './components/main_content/calendar/Calendar.vue'
 import HabitTracking from './components/main_content/habit_tracking/HabitTracking.vue'
 </script>
 
+
+
 <template>
-  <div id="app" class="flex-container">
-    <div id="add-habit-container" class="add-habit-content">
-      <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
+  <div id="app">
+    <div class="sidebar">
+      <div id="add-habit-container" class="add-habit-content">
+        <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
+      </div>
     </div>
-        <div class="router-view-container">
-          <router-view />
-        </div>
-    <div id="main-content-container">
-        <Calendar />
-        <HabitTracking />
+    <div class="content">
+      <router-view />
+    </div>
+    <div class="main-content">
+      <Calendar />
     </div>
   </div>
 </template>
@@ -22,25 +25,38 @@ import HabitTracking from './components/main_content/habit_tracking/HabitTrackin
 <style>
 #app {
   display: flex;
-  height: 100vh;
   font-family: monospace;
+  height: 100vh;
+  width: 100%;
 }
 
-.flex-container {
+.sidebar {
+  width: 80px;
+  background-color: #fbf2d5;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s ease;
 }
 
-#main-content-container {
-  position: relative;
-  display: flex;
-}
-
-.router-view-container {
-  flex: 1;
+.content {
   padding: 20px;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: flex 0.3s ease;
 }
+
+.main-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: flex 0.3s ease;
+}
+
 
 /* Add habit button */
 .add-habit-content {

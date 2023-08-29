@@ -5,6 +5,7 @@ export const useAppStore = defineStore('app', {
         habits: [],
         categories: [],
         selectedDay: null,
+        selectedCategories: [],
         habitsByDay: {},
     }),
     actions: {
@@ -24,6 +25,9 @@ export const useAppStore = defineStore('app', {
             }
             this.habitsByDay[day].push({ habit, category })
         },
+        setSelectedCategories(categories) {
+            this.selectedCategories = categories;
+        },
     },
     getters: {
         getHabitsByCategoryForSelectedDay() {
@@ -40,6 +44,9 @@ export const useAppStore = defineStore('app', {
             });
 
             return habitsByCategory;
+        },
+        getSelectedCategories() {
+            return this.selectedCategories;
         },
     }
 })

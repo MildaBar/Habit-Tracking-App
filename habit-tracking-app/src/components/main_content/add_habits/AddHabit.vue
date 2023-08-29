@@ -96,6 +96,7 @@ const categories = computed(() => appStore.categories)
     padding: 10px;
     display: block;
     align-items: center;
+    height: 100vh;
 }
 
 h1 {
