@@ -26,8 +26,20 @@ export const useAppStore = defineStore('app', {
         },
     },
     getters: {
-        getHabitsForSelectedDay() {
-            return this.habitsByDay[this.selectedDay] || []
-        }
+        getHabitsByCategoryForSelectedDay() {
+            const habitsByCategory = {};
+
+            const habitsForSelectedDay = this.habitsByDay[this.selectedDay] || [];
+
+            habitsForSelectedDay.forEach((habit) => {
+                const { category } = habit;
+                if (!habitsByCategory[category]) {
+                    habitsByCategory[category] = [];
+                }
+                habitsByCategory[category].push(habit);
+            });
+
+            return habitsByCategory;
+        },
     }
 })

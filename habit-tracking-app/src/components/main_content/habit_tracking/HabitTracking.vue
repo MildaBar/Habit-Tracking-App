@@ -1,36 +1,54 @@
+<template>
+  <div id="choose-category">
+      <h2>Habit list</h2>
+      <div class="category-options">
+          <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
+          <label for="allCategories">All Categories</label>
+
+          <input type="radio" id="selected-categories" value="selected" v-model="selectedCategories">
+          <label for="selected-categories">Selected Categories</label>
+      </div>
+
+      <div v-if="selectedCategories === 'selected'" id="category-checkboxes">
+          <label v-for="newCat in appStore.categories" :key="newCat">
+              <input type="checkbox" v-model="selectedCategoryCheckboxes" :value="newCat">
+              {{ newCat }}
+          </label>
+      </div>
+
+      <br>
+      <span>Selected categories: {{ selectedCategoryCheckboxes }}</span>
+  </div>
+</template>
+
 <script setup>
-import {ref} from 'vue'
-import { useCategoryStore } from '../add_habits/storeCategory.js'
+import { ref, watch } from 'vue';
+import { useAppStore } from '../store.js';
 
-const categoryStore = useCategoryStore()
-const categories = categoryStore.categories
+const appStore = useAppStore();
 
-const selected = ref('')
-const selectedCategories = ref('')
+const selectedCategories = ref('all');
+const selectedCategoryCheckboxes = ref([]);
+const computedSelected = ref('');
+
+if (selectedCategories.value === 'all') {
+  computedSelected.value = 'All Categories';
+} else if (selectedCategories.value === 'selected') {
+  computedSelected.value = appStore.categories
+      .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
+      .map(cat => cat.name)
+      .join(', ');
+}
+
+
+watch(selectedCategoryCheckboxes, () => {
+  computedSelected.value = appStore.categories
+      .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
+      .map(cat => cat.name)
+      .join(', ');
+});
 
 </script>
-
-<template>
-    <div id="choose-category">
-        <h2>Habit list</h2>
-        <div class="category-options">
-            <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
-            <label for="allCategories">All Categories</label>
-
-            <input type="radio" id="selected-categories" value="selected" v-model="selectedCategories">
-            <label for="selected-categories">Selected Categories</label>
-        </div>
-        <select
-        v-model="selected"
-        id="select-category">
-            <option disabled value="">Select habit category</option>
-            <option v-for="newCat in categories" :value="newCat.name">{{ newCat.name }}</option>
-        </select>
-
-        <br>
-        <span>Selected categories: {{ selected }}</span>
-    </div>
-</template>
 
 <style scoped>
 

@@ -7,9 +7,11 @@
         </div>
         <div class="habit-list">
             <h3> Habits for {{ appStore.selectedDay }}</h3>
-        <div class="habit-item" v-for="(habit, index) in habitsForSelectedDay" :key="index">
-            <p>{{  habit.habit }} (Category: {{ habit.category }})
-            </p>
+        <div class="habit-item" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
+            <h2> CATEGORY: {{ category }}</h2>
+            <div v-for="(habit, index) in habits" :key="index" class="habit-item">
+                <p>{{ habit.habit }}</p>
+            </div>
         </div>
     </div>
     </section>
@@ -27,10 +29,10 @@ const selectDay = (day) => {
     appStore.setSelectedDay(day);
 };
 
-const habitsForSelectedDay = computed(() => {
-    console.log('Computed Property - Selected Day:', appStore.selectedDay);
-    return appStore.getHabitsForSelectedDay;
+const habitsByCategoryForSelectedDay = computed(() => {
+    return appStore.getHabitsByCategoryForSelectedDay;
 });
+
 
 </script>
 
