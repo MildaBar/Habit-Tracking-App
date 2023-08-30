@@ -1,29 +1,32 @@
 <script setup>
 import { RouterView, RouterLink } from 'vue-router';
 import Calendar from './components/main_content/calendar/Calendar.vue'
-import HabitTracking from './components/main_content/habit_tracking/HabitTracking.vue'
+import Header from './components/header/Header.vue'
 </script>
 
 
 
 <template>
   <div id="app">
-    <div class="sidebar">
-      <div id="add-habit-container" class="add-habit-content">
-        <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
+    <Header />
+    <div id="main-content-container">
+      <div class="sidebar">
+        <div id="add-habit-container" class="add-habit-content">
+          <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
+        </div>
       </div>
-    </div>
-    <div class="content">
-      <router-view />
-    </div>
-    <div class="main-content">
-      <Calendar />
+      <div class="content">
+        <router-view />
+      </div>
+      <div class="main-content">
+        <Calendar />
+      </div>
     </div>
   </div>
 </template>
 
 <style>
-#app {
+#main-content-container {
   display: flex;
   font-family: monospace;
   height: 100vh;
