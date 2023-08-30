@@ -32,13 +32,13 @@
     <div v-for="newCat in appStore.categories" :key="newCat">
       <label class="category-checkboxes">
         <input
-          v-if="selectedCategories === 'selected' || (selectedCategories === 'all' && allCategories.includes(newCat))"
-          type="checkbox"
-          v-model="selectedCategoryCheckboxes"
-          :value="newCat"
-          :checked="selectedCategories === 'all'"
-        >
-        {{ newCat }}
+        type="checkbox"
+        v-if="selectedCategories === 'selected' || selectedCategories === 'all'"
+        v-model="selectedCategoryCheckboxes"
+        :value="newCat"
+        :checked="selectedCategories === 'all'"
+      >
+      {{ newCat }}
       </label>
     </div>
     <span>Selected categories: {{ selectedCategoriesText }}</span>
@@ -74,7 +74,9 @@ watch(selectedCategoryCheckboxes, () => {
 });
 
 watch(selectedCategories, () => {
-  selectedCategoryCheckboxes.value = appStore.categories.map(cat => cat.name);
+  if (selectedCategories.value === 'all') {
+    selectedCategoryCheckboxes.value = appStore.categories.map(cat => cat.name);
+  }
 });
 
 

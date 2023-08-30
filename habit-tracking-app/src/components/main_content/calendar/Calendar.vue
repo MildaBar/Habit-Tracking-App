@@ -28,13 +28,14 @@
             <input
             type="checkbox"
             id="checkbox"
-            v-model="checked"
+            v-model="habitItem.checked"
             >
             <label
-            :for="checkboxId"
-            :class="{ 'checked-label' : checked }"
+            v-show="mark"
+            for="checkbox"
+            :class="{ 'checked-label' : habitItem.checked }
+            "
             >{{ habitItem.habit }}</label>
-                <!-- <p>{{ habitItem.habit }}</p> -->
             </div>
             </div>
         </div>
@@ -49,9 +50,7 @@ import { useAppStore } from '../store';
 const appStore = useAppStore()
 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-const checked = ref(false);
-const checkboxId = 'checkbox';
-
+const mark = ref(true);
 
 const selectDay = (day) => {
     console.log('Selected DAY: ', day);
