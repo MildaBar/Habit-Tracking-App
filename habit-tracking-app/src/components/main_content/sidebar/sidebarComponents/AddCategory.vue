@@ -1,9 +1,11 @@
 <template>
     <!-- Add new habit category -->
-    <div id="exit-btn-container">
-        <button id="exit-btn" @click="navigateToMainPage">X</button>
-    </div>
-    <section id="add-category-container">
+    <section id="section">
+        <div id="exit-btn-container">
+            <button id="exit-btn" @click="navigateToMainPage">X</button>
+        </div>
+    
+    <section id="container">
         <h1>ADD NEW CATEGORY</h1>
 
         <div id="add-category">
@@ -11,6 +13,7 @@
             <input v-model="category">
             <button @click="addNewCategory">Add new category</button>
         </div>
+    </section>
     </section>
 </template>
 
@@ -36,5 +39,5 @@ const navigateToMainPage = () => {
 </script>
 
 <style scoped>
-
+@import '../sidebarComponents/style.css'
 </style>

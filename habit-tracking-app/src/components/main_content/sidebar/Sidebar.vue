@@ -2,15 +2,28 @@
   <section id="sidebar">
     <div class="sidebar">
       <div id="add-habit-container">
-        <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
+        <router-link id="add-habit-link" class="link" :to="{name: 'addHabit'}">
+          <img src="../../../assets/add.svg" alt="add-icon">
+          Add Habit
+        </router-link>
       </div>
       <div id="add-category">
-        <router-link id="add-category-link" :to="{name: 'addCategory'}">Add Category</router-link>
+        <router-link id="add-category-link" class="link" :to="{name: 'addCategory'}">
+          <img src="../../../assets/category.svg" alt="add-category">
+          Add Category
+        </router-link>
       </div>
       <div id="delete-category">
-        <router-link id="delete-category-link" :to="{name: 'deleteCategory'}">Delete Category</router-link>
+        <router-link id="delete-category-link" class="link" :to="{name: 'deleteCategory'}">
+          <img src="../../../assets/delete.svg" alt="">
+          Delete Category
+        </router-link>
       </div>
     </div>
+    <div id="information">
+        <h2>Information</h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus voluptatem excepturi accusantium totam non quam, explicabo ratione? Saepe assumenda beatae consequuntur expedita illum reiciendis qui, magnam architecto dolor cumque nobis!</p>
+      </div>
   </section>
 </template>
 
@@ -21,63 +34,33 @@ import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <style scoped>
-#main-content-container {
+.link {
+  text-decoration: none;
+  color: black;
+  padding: 20px;
   display: flex;
-  font-family: monospace;
-  height: 100vh;
-  width: 100%;
+  gap: 10px;
+  border: 1px solid black;
 }
 
 .sidebar {
-  width: 80px;
-  background-color: #fbf2d5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: width 0.3s ease;
+  padding: 10px;
 }
 
-.content {
-  padding: 20px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: flex 0.3s ease;
+#information {
+  padding: 10px;
 }
 
-.main-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: flex 0.3s ease;
+#add-habit-link:hover {
+  background-color: rgba(0, 128, 0, 0.201);
 }
 
-
-/* Add habit button */
-.add-habit-content {
-  border-radius: 50%;
-  height: 80px;
-  width: 80px;
-  background: #fbf2d5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#add-category-link:hover {
+  background-color: rgba(255, 166, 0, 0.187);
 }
 
-#add-habit-link {
-  text-decoration: none;
-  color: black;
-}
-
-.add-habit-content:hover {
-  transform: scale(1.3);
-  background-color: #fbf2d5;
-  transition-duration: 600ms;
-  transition-timing-function: ease;
-  border: 1px solid black;
+#delete-category-link:hover {
+  background-color: rgba(255, 0, 0, 0.24);
 }
 
 </style>

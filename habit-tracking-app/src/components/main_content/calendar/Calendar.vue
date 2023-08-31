@@ -30,7 +30,7 @@
   </div>
 
   <!-- Habit List -->
-  <h3> Habits for {{ appStore.selectedDay }}</h3><div class="habit-list">
+  <h3>{{ appStore.selectedDay }}</h3><div class="habit-list">
       <div class="habit-row">
           <div class="habit-list-container" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
               <h2> CATEGORY: {{ category }}</h2>
@@ -188,10 +188,8 @@ watch(
 }
 
 .box:hover {
-    background-color: #fdc57b;
+    background-color: #fbf2d5;
 }
-
-
 
 /* Habit list by categories */
 .habit-list {
@@ -219,7 +217,7 @@ watch(
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #f9f9f9;
-  margin-bottom: 20px; /* Add some space between rows */
+  margin-bottom: 20px;
 }
 
 .habit-item {

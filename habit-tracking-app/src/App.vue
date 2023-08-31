@@ -14,10 +14,12 @@ import Sidebar from './components/main_content/sidebar/Sidebar.vue'
     </header>
     <div id="main-content-container">
       <div class="main-content">
-        <Sidebar />
+        <div id="sidebar">
+          <Sidebar />
+        </div>
         <div class="content">
         <router-view />
-      </div>
+        </div>
         <Calendar />
       </div>
     </div>
@@ -32,14 +34,14 @@ import Sidebar from './components/main_content/sidebar/Sidebar.vue'
   width: 100%;
 }
 
-.sidebar {
-  width: 80px;
+#sidebar {
+  width: 200px;
   background-color: #fbf2d5;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: width 0.3s ease;
+  height: 100%;
+  padding: 5px;
+  align-items: flex-start;
 }
 
 .content {
