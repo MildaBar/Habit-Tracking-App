@@ -1,16 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Calendar from './components/main_content/calendar/Calendar.vue'
 import AddHabit from './components/main_content/add_habits/AddHabit.vue'
-import HabitTracking from './components/main_content/habit_tracking/HabitTracking.vue'
 import DayHabits from './components/main_content/calendar/DayHabits.vue'
+import AddCategory from './components/main_content/sidebar/sidebarComponents/AddCategory.vue'
+import DeleteCategory from './components/main_content/sidebar/sidebarComponents/DeleteCategory.vue'
 
 
 const routes = [
-    {
-        path: '/habitTracking',
-        name: 'habitTracking',
-        component: HabitTracking,
-    },
     {
         path: '/calendar',
         name: 'calendar',
@@ -20,6 +16,16 @@ const routes = [
         path: '/addHabit',
         name: 'addHabit',
         component: AddHabit,
+    },
+    {
+        path: '/addCategory',
+        name: 'addCategory',
+        component: AddCategory,
+    },
+    {
+        path: '/deleteCategory',
+        name: 'deleteCategory',
+        component: DeleteCategory,
     },
     {
         path: '/day/:dayName',

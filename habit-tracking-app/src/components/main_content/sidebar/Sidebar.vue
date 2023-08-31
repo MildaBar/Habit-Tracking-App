@@ -1,30 +1,26 @@
-<script setup>
-import { RouterView, RouterLink } from 'vue-router';
-import Calendar from './components/main_content/calendar/Calendar.vue'
-import Header from './components/header/Header.vue'
-import Sidebar from './components/main_content/sidebar/Sidebar.vue'
-</script>
-
-
-
 <template>
-  <div id="app">
-    <header>
-      <Header />
-    </header>
-    <div id="main-content-container">
-      <div class="main-content">
-        <Sidebar />
-        <div class="content">
-        <router-view />
+  <section id="sidebar">
+    <div class="sidebar">
+      <div id="add-habit-container">
+        <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
       </div>
-        <Calendar />
+      <div id="add-category">
+        <router-link id="add-category-link" :to="{name: 'addCategory'}">Add Category</router-link>
+      </div>
+      <div id="delete-category">
+        <router-link id="delete-category-link" :to="{name: 'deleteCategory'}">Delete Category</router-link>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
-<style>
+<script setup>
+import { RouterLink, RouterView } from 'vue-router';
+
+
+</script>
+
+<style scoped>
 #main-content-container {
   display: flex;
   font-family: monospace;
@@ -61,7 +57,7 @@ import Sidebar from './components/main_content/sidebar/Sidebar.vue'
 
 
 /* Add habit button */
-/* .add-habit-content {
+.add-habit-content {
   border-radius: 50%;
   height: 80px;
   width: 80px;
@@ -82,6 +78,6 @@ import Sidebar from './components/main_content/sidebar/Sidebar.vue'
   transition-duration: 600ms;
   transition-timing-function: ease;
   border: 1px solid black;
-} */
+}
 
 </style>

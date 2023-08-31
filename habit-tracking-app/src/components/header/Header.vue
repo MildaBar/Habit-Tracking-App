@@ -1,16 +1,11 @@
 <script setup>
-import HabitTracking from '../main_content/habit_tracking/HabitTracking.vue'
+import { RouterView, RouterLink } from 'vue-router';
 
 </script>
 
 <template>
     <header class="main-header">
         <div class="header">
-            <div class="sidebar">
-              <div id="add-habit-container" class="add-habit-content">
-              <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
-              </div>
-            </div>
             <img src="../../assets/bar-chart.png" alt="Logo" class="logo">
             <h1 class="welcome-message">Be the best with DAILY INPRO!</h1>
           </div>

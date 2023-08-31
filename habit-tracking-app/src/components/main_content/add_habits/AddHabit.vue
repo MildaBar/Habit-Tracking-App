@@ -29,31 +29,6 @@
 
         <button @click="addNewHabit" :disabled="!selected || habit.trim() === '' || !appStore.selectedDay">Add new habit</button>
     </section>
-
-    <!-- Add new habit category -->
-    <section id="add-category-container">
-        <h1>ADD NEW CATEGORY</h1>
-
-        <div id="add-category">
-            <h2>Write habit category:</h2>
-            <input v-model="category">
-            <button @click="addNewCategory">Add new category</button>
-        </div>
-    </section>
-
-    <!-- Delete category -->
-    <section id="delete-category-container">
-        <h1>DELETE CATEGORY</h1>
-
-        <div id="delete-category">
-            <h2>Select which category to delete:</h2>
-            <select v-model="deleteCategory" id="delete-selected-category">
-                <option disabled value="">Select habit category</option>
-                <option v-for="category in categories" :value="category">{{ category }}</option>
-            </select>
-            <button @click="deleteSelectedCategory">DELETE</button>
-        </div>
-    </section>
 </section>
    <router-view />
 </template>
@@ -76,21 +51,6 @@ const router = useRouter();
 const navigateToMainPage = () => {
   router.push('/');
 };
-
-const addNewCategory = () => {
-   if (category.value.trim() !== '') {
-       appStore.addCategory(category.value);
-       category.value = '';
-   }
-}
-
-const deleteSelectedCategory = () => {
-    const categoryToDelete = deleteCategory.value;
-    if (categoryToDelete) {
-        appStore.removeCategory(categoryToDelete);
-        deleteCategory.value = ''
-    }
-}
 
 const addNewHabit = () => {
    if (habit.value.trim() && selected.value !== '' ) {

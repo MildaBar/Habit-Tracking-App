@@ -30,15 +30,16 @@
     </div>
 
     <!-- Habit List -->
-    <div class="habit-list">
-      <h3> Habits for {{ appStore.selectedDay }}</h3>
-      <div class="habit-item" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
-        <h2> CATEGORY: {{ category }}</h2>
-        <div v-for="(habitItem, habitIndex) in habits" :key="habitIndex" class="habit-item">
-          <input type="checkbox" :id="habitItem.id" v-model="habitItem.checked">
-          <label v-show="mark" :for="habitItem.id" :class="{ 'checked-label' : habitItem.checked }">{{ habitItem.habit }}</label>
+    <h3> Habits for {{ appStore.selectedDay }}</h3><div class="habit-list">
+        <div class="habit-row">
+            <div class="habit-list-container" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
+                <h2> CATEGORY: {{ category }}</h2>
+                <div v-for="(habitItem, habitIndex) in habits" :key="habitIndex" class="habit-item">
+                    <input type="checkbox" :id="habitItem.id" v-model="habitItem.checked">
+                    <label v-show="mark" :for="habitItem.id" :class="{ 'checked-label': habitItem.checked }">{{ habitItem.habit }}</label>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
   </section>
 </template>
@@ -189,27 +190,79 @@ watch(
     background-color: #fdc57b;
 }
 
+
+
+/* Habit list by categories */
 .habit-list {
-    text-align: center;
-    background-color: #394a51;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #394a51;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  gap: 20px;
 }
 
-.habit-list h3 {
-    color: white;
-    text-transform: uppercase;
+.habit-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.habit-list-container {
+  flex-basis: calc(50% - 10px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px; /* Add some space between rows */
 }
 
 .habit-item {
-    margin: 10px 0;
-    padding: 5px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-
+  margin: 5px 0;
 }
+
+
+
+
 
 .checked-label {
   text-decoration: line-through;
 }
+
+#choose-category {
+  border: 1px solid black;
+  border-style: dashed;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.category-options {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+select[multiple] {
+  width: 100%;
+  height: auto;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 </style>
