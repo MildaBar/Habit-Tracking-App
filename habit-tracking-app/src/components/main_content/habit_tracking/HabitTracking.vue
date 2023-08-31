@@ -9,27 +9,17 @@
       <label for="selected-categories">Selected Categories</label>
     </div>
 
-    <!-- <div v-if="selectedCategories === 'selected'" class="category-checkboxes">
+    <div v-if="selectedCategories === 'selected'" class="category-checkboxes">
       <label v-for="newCat in appStore.categories" :key="newCat">
         <input type="checkbox" v-model="selectedCategoryCheckboxes" :value="newCat">
         {{ newCat }}
       </label>
-      <span>Selected categories: {{ selectedCategoryCheckboxes }}</span>
+      <!-- <span>Selected categories: {{ selectedCategoriesText }}</span> -->
     </div>
-    <div v-if="selectedCategories === 'all'" class="category-checkboxes">
-      <label v-for="newCat in appStore.categories" :key="newCat">
-        <input
-        type="checkbox"
-        v-model="allCategories"
-        :value="newCat"
-        :checked="selectedCategories === 'all'"
-        >
-        {{ newCat }}
-      </label>
-      <span>Selected categories: {{ allCategories }}</span>
-    </div> -->
+    <div v-else-if="selectedCategories === 'all'" class="category-checkboxes">
+    </div>
 
-    <div v-for="newCat in appStore.categories" :key="newCat">
+    <!-- <div v-for="newCat in appStore.categories" :key="newCat">
       <label class="category-checkboxes">
         <input
         type="checkbox"
@@ -41,7 +31,7 @@
       {{ newCat }}
       </label>
     </div>
-    <span>Selected categories: {{ selectedCategoriesText }}</span>
+    <span>Selected categories: {{ selectedCategoriesText }}</span> -->
   </div>
 </template>
 
@@ -56,35 +46,36 @@ const selectedCategoryCheckboxes = ref([]);
 const allCategories = ref([]);
 const computedSelected = ref('');
 
-if (selectedCategories.value === 'all') {
-  computedSelected.value = 'All Categories';
-} else if (selectedCategories.value === 'selected') {
-  computedSelected.value = appStore.categories
-      .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
-      .map(cat => cat.name)
-      .join(', ');
-}
+// if (selectedCategories.value === 'all') {
+//   computedSelected.value = 'All Categories';
+// } else if (selectedCategories.value === 'selected') {
+//   computedSelected.value = appStore.categories
+//       .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
+//       .map(cat => cat.name)
+//       .join(', ');
+// }
 
-watch(selectedCategoryCheckboxes, () => {
-  appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
-  computedSelected.value = appStore.categories
-      .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
-      .map(cat => cat.name)
-      .join(', ');
-});
+// watch(selectedCategoryCheckboxes, () => {
+//   appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
+// })
+
+
+// const selectedCategoriesText = computed(() => {
+//   if (selectedCategories.value === 'all') {
+//     return 'All Categories';
+//   }
+//   return selectedCategoryCheckboxes.value.join(', ');
+// });
 
 watch(selectedCategories, () => {
   if (selectedCategories.value === 'all') {
-    selectedCategoryCheckboxes.value = appStore.categories.map(cat => cat.name);
+    // When 'All Categories' is selected, get all categories and update habits
+    const allCategories = appStore.getAllCategories();
+    appStore.setSelectedCategories(allCategories);
+  } else if (selectedCategories.value === 'selected') {
+    // When 'Selected Categories' is selected, update habits based on selected checkboxes
+    appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
   }
-});
-
-
-const selectedCategoriesText = computed(() => {
-  if (selectedCategories.value === 'all') {
-    return 'All Categories';
-  }
-  return selectedCategoryCheckboxes.value.join(', ');
 });
 
 
@@ -96,6 +87,7 @@ const selectedCategoriesText = computed(() => {
   border: 1px solid black;
   border-style: dashed;
   padding: 10px;
+  border-radius: 5px;
 }
 
 .category-options {

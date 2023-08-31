@@ -63,7 +63,6 @@ import { RouterView, useRouter } from 'vue-router';
 import { ref, computed } from 'vue'
 import { useAppStore } from '../store';
 
-const router = useRouter()
 
 const appStore = useAppStore()
 const category = ref('')
@@ -72,9 +71,11 @@ const deleteCategory = ref('')
 const selected = ref('')
 const habit = ref('')
 
+const router = useRouter();
+
 const navigateToMainPage = () => {
-    router.push('/')
-}
+  router.push('/');
+};
 
 const addNewCategory = () => {
    if (category.value.trim() !== '') {

@@ -2,19 +2,17 @@
 import { RouterView, RouterLink } from 'vue-router';
 import Calendar from './components/main_content/calendar/Calendar.vue'
 import Header from './components/header/Header.vue'
+import HabitTracking from './components/main_content/habit_tracking/HabitTracking.vue'
 </script>
 
 
 
 <template>
   <div id="app">
-    <Header />
+    <header>
+      <Header />
+    </header>
     <div id="main-content-container">
-      <div class="sidebar">
-        <div id="add-habit-container" class="add-habit-content">
-          <router-link id="add-habit-link" :to="{name: 'addHabit'}">Add Habit</router-link>
-        </div>
-      </div>
       <div class="content">
         <router-view />
       </div>

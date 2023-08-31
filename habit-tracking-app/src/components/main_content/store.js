@@ -54,5 +54,8 @@ export const useAppStore = defineStore('app', {
         getSelectedCategories() {
             return this.selectedCategories;
         },
+        getAllCategories() {
+            return this.categories;
+        },
     }
 })
