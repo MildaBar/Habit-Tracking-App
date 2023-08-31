@@ -29,6 +29,7 @@
 
         <button @click="addNewHabit" :disabled="!selected || habit.trim() === '' || !appStore.selectedDay">Add new habit</button>
     </section>
+
 </section>
    <router-view />
 </template>
@@ -40,8 +41,6 @@ import { useAppStore } from '../store';
 
 
 const appStore = useAppStore()
-const category = ref('')
-const deleteCategory = ref('')
 
 const selected = ref('')
 const habit = ref('')

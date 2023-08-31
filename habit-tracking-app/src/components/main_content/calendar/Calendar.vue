@@ -1,47 +1,47 @@
 <template>
-      <section id="calendar-section">
-    <div class="calendar-container">
-      <!-- Calendar Days -->
-      <div class="box" v-for="(day, index) in days" :key="index" @click="navigateToDayHabits(day)">
-        {{ day.name }}<br>
-        {{ day.date }}
-      </div>
-
-      <!-- Choose Category -->
-      <div class="box">
-        <h2>Habit list</h2>
-        <div class="category-options">
-          <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
-          <label for="allCategories">All Categories</label>
-
-          <input type="radio" id="selected-categories" value="selected" v-model="selectedCategories">
-          <label for="selected-categories">Selected Categories</label>
-        </div>
-
-        <div v-if="selectedCategories === 'selected'" class="category-checkboxes">
-          <label v-for="newCat in appStore.categories" :key="newCat">
-            <input type="checkbox" v-model="selectedCategoryCheckboxes" :value="newCat">
-            {{ newCat }}
-          </label>
-        </div>
-        <div v-else-if="selectedCategories === 'all'" class="category-checkboxes">
-        </div>
-      </div>
+    <section id="calendar-section">
+  <div class="calendar-container">
+    <!-- Calendar Days -->
+    <div class="box" v-for="(day, index) in days" :key="index" @click="navigateToDayHabits(day)">
+      {{ day.name }}<br>
+      {{ day.date }}
     </div>
 
-    <!-- Habit List -->
-    <h3> Habits for {{ appStore.selectedDay }}</h3><div class="habit-list">
-        <div class="habit-row">
-            <div class="habit-list-container" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
-                <h2> CATEGORY: {{ category }}</h2>
-                <div v-for="(habitItem, habitIndex) in habits" :key="habitIndex" class="habit-item">
-                    <input type="checkbox" :id="habitItem.id" v-model="habitItem.checked">
-                    <label v-show="mark" :for="habitItem.id" :class="{ 'checked-label': habitItem.checked }">{{ habitItem.habit }}</label>
-                </div>
-            </div>
-        </div>
+    <!-- Choose Category -->
+    <div class="box">
+      <h2>Habit list</h2>
+      <div class="category-options">
+        <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
+        <label for="allCategories">All Categories</label>
+
+        <input type="radio" id="selected-categories" value="selected" v-model="selectedCategories">
+        <label for="selected-categories">Selected Categories</label>
+      </div>
+
+      <div v-if="selectedCategories === 'selected'" class="category-checkboxes">
+        <label v-for="newCat in appStore.categories" :key="newCat">
+          <input type="checkbox" v-model="selectedCategoryCheckboxes" :value="newCat">
+          {{ newCat }}
+        </label>
+      </div>
+      <div v-else-if="selectedCategories === 'all'" class="category-checkboxes">
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- Habit List -->
+  <h3> Habits for {{ appStore.selectedDay }}</h3><div class="habit-list">
+      <div class="habit-row">
+          <div class="habit-list-container" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
+              <h2> CATEGORY: {{ category }}</h2>
+              <div v-for="(habitItem, habitIndex) in habits" :key="habitIndex" class="habit-item">
+                  <input type="checkbox" :id="habitItem.id" v-model="habitItem.checked">
+                  <label v-show="mark" :for="habitItem.id" :class="{ 'checked-label': habitItem.checked }">{{ habitItem.habit }}</label>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
 </template>
 
 <script setup>
@@ -60,100 +60,101 @@ const computedSelected = ref('');
 const mark = ref(true);
 
 const habitsByCategoryForSelectedDay = computed(() => {
-    const selectedCategories = appStore.getSelectedCategories;
-    const habitsByCategory = {};
+  const selectedCategories = appStore.getSelectedCategories;
+  const habitsByCategory = {};
 
-    const habitsForSelectedDay = appStore.habitsByDay[appStore.selectedDay] || [];
+  const habitsForSelectedDay = appStore.habitsByDay[appStore.selectedDay] || [];
 
-    habitsForSelectedDay.forEach((habit) => {
-        if (selectedCategories.includes(habit.category)) {
-            if (!habitsByCategory[habit.category]) {
-                habitsByCategory[habit.category] = [];
-            }
-            habitsByCategory[habit.category].push(habit);
-        }
-    });
+  habitsForSelectedDay.forEach((habit) => {
+      if (selectedCategories.includes(habit.category)) {
+          if (!habitsByCategory[habit.category]) {
+              habitsByCategory[habit.category] = [];
+          }
+          habitsByCategory[habit.category].push(habit);
+      }
+  });
 
-    return habitsByCategory;
+  return habitsByCategory;
 });
 
 
 if (selectedCategories.value === 'all') {
-  computedSelected.value = 'All Categories';
+computedSelected.value = 'All Categories';
 } else if (selectedCategories.value === 'selected') {
-  computedSelected.value = appStore.categories
-      .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
-      .map(cat => cat.name)
-      .join(', ');
+computedSelected.value = appStore.categories
+    .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
+    .map(cat => cat.name)
+    .join(', ');
 }
 
 watch(selectedCategoryCheckboxes, () => {
-  appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
-  computedSelected.value = appStore.categories
-      .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
-      .map(cat => cat.name)
-      .join(', ');
+appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
+computedSelected.value = appStore.categories
+    .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
+    .map(cat => cat.name)
+    .join(', ');
 });
 
 watch(selectedCategories, (newValue) => {
-  if (newValue === 'all') {
-    selectedCategoryCheckboxes.value = appStore.getAllCategories;
-  } else if (newValue === 'selected') {
-    selectedCategoryCheckboxes.value = appStore.getSelectedCategories;
-  }
+if (newValue === 'all') {
+  selectedCategoryCheckboxes.value = appStore.getAllCategories;
+} else if (newValue === 'selected') {
+  selectedCategoryCheckboxes.value = appStore.getSelectedCategories;
+}
 });
 
 
 const selectDay = (day) => {
-  selectedDay.value = day;
-  appStore.setSelectedDay(day);
-  router.push({name: 'day', params: {dayName: day.date}})
+selectedDay.value = day;
+appStore.setSelectedDay(day);
+router.push({name: 'day', params: {dayName: day.date}})
 };
 
 const getCurrentDate = () => {
-    const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const today = new Date();
-    const currentDay = today.getUTCDay();
+  const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const today = new Date();
+  const currentDay = today.getUTCDay();
 
-    // Set the time zone offset to UTC+3 (EEST)
-    const timeZoneOffset = 3 * 60; // Convert to minutes
+  // Set the time zone offset to UTC+3 (EEST)
+  const timeZoneOffset = 3 * 60; // Convert to minutes
 
-    const weekDates = daysOfWeek.map((day, index) => {
-        const offset = index - currentDay + 1;
-        const date = new Date(today);
+  const weekDates = daysOfWeek.map((day, index) => {
+      const offset = index - currentDay + 1;
+      const date = new Date(today);
 
-        // Adjust the date and time based on the time zone offset
-        date.setUTCMinutes(date.getUTCMinutes() + timeZoneOffset);
-        date.setUTCDate(today.getUTCDate() + offset);
+      // Adjust the date and time based on the time zone offset
+      date.setUTCMinutes(date.getUTCMinutes() + timeZoneOffset);
+      date.setUTCDate(today.getUTCDate() + offset);
 
-        const dd = String(date.getUTCDate()).padStart(2, '0');
-        const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
-        const yyyy = date.getUTCFullYear();
-        return { name: day, date: `${yyyy}-${mm}-${dd}` };
-    });
+      const dd = String(date.getUTCDate()).padStart(2, '0');
+      const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
+      const yyyy = date.getUTCFullYear();
+      return { name: day, date: `${yyyy}-${mm}-${dd}` };
+  });
 
-    return weekDates;
+  return weekDates;
 }
 const weekDates = getCurrentDate();
 
 const days = daysOfWeek.map((day, index) => {
-  return { name: day, date: weekDates[index].date };
+return { name: day, date: weekDates[index].date };
 });
 
 const navigateToDayHabits = (day) => {
-  router.push({ name: 'day', params: { dayName: day.date } });
+router.push({ name: 'day', params: { dayName: day.date } });
 };
 
 watch(
-  () => router.currentRoute.value.params.dayName,
-  (newDayName) => {
-    if (newDayName) {
-      selectDay(newDayName);
-    }
+() => router.currentRoute.value.params.dayName,
+(newDayName) => {
+  if (newDayName) {
+    selectDay(newDayName);
   }
+}
 );
 
 </script>
+
 
 <style scoped>
 
