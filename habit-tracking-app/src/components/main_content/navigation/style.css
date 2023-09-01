@@ -1,0 +1,21 @@
+#container {
+    border: 1px solid black;
+    border-style: dashed;
+    padding: 10px;
+}
+
+#section {
+    background-color:  #fdc57b;
+    padding: 10px;
+    display: block;
+    align-items: center;
+    height: 100%;
+}
+
+h2 {
+    font-size: 15px
+}
+
+#selected-habit {
+    padding: 5px;
+}

@@ -2,14 +2,19 @@
     <section id="calendar-section">
   <div class="calendar-container">
     <!-- Calendar Days -->
-    <div class="box" v-for="(day, index) in days" :key="index" @click="navigateToDayHabits(day)">
+    <div class="col-sm" v-for="(day, index) in days" :key="index" @click="navigateToDayHabits(day)">
       {{ day.name }}<br>
       {{ day.date }}
     </div>
+  </div>
 
-    <!-- Choose Category -->
-    <div class="box">
-      <h2>Habit list</h2>
+  <!-- Habit List -->
+  <h3>{{ appStore.selectedDay }}</h3>
+  <label v-show="isFutureDay">You can't mark/unmark habits for future days.</label>
+  <div class="habit-list">
+        <!-- Choose Category -->
+        <div id="select-category">
+      <!-- <h2>Habit list</h2> -->
       <div class="category-options">
         <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
         <label for="allCategories">All Categories</label>
@@ -27,10 +32,6 @@
       <div v-else-if="selectedCategories === 'all'" class="category-checkboxes">
       </div>
     </div>
-  </div>
-
-  <!-- Habit List -->
-  <h3>{{ appStore.selectedDay }}</h3><div class="habit-list">
       <div class="habit-row">
           <div class="habit-list-container" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
               <h2> CATEGORY: {{ category }}</h2>
@@ -48,8 +49,6 @@
                   :class="{ 'checked-label': habitItem.checked }"
                   >
                   {{ habitItem.habit }}</label>
-
-                  <label v-show="isFutureDay">You can mark/unmark habits for future days.</label>
               </div>
           </div>
       </div>
@@ -71,6 +70,7 @@ const selectedCategoryCheckboxes = ref([]);
 const allCategories = ref([]);
 const computedSelected = ref('');
 const mark = ref(true);
+
 
 // ----- future day mark / unmark
 const currentDate = new Date();
@@ -190,48 +190,48 @@ watch(
 
 
 <style scoped>
-
+/* Calendar section styles */
 #calendar-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
+
 .calendar-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    background-color: #7fa99b;
-    border: 1px solid #ccc;
-    gap: 10px;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 0;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #7fa99b;
+  border: 1px solid #ccc;
+  white-space: nowrap;
 }
 
-.box {
-    border: 1px solid black;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: white;
+.col-sm {
+  border: 1px solid black;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 20px;
+  text-align: center;
+  background-color: white;
 }
 
-.box:hover {
-    background-color: #fbf2d5;
+.col-sm:hover {
+  background-color: #fbf2d5;
 }
 
-/* Habit list by categories */
+/* Habit list by categories !!!!!!!!!!!! */
 .habit-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #394a51;
   width: 100%;
-  height: 100%;
   padding: 20px;
   gap: 20px;
 }
@@ -257,44 +257,21 @@ watch(
   margin: 5px 0;
 }
 
-
-
-
+#select-category {
+  background-color: #7fa99bb3;
+  width: 100%;
+  padding: 10px;
+}
 
 .checked-label {
   text-decoration: line-through;
 }
 
-#choose-category {
-  border: 1px solid black;
-  border-style: dashed;
-  padding: 10px;
-  border-radius: 5px;
-}
+/* Media Queries for Responsive Design */
 
-.category-options {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
+@media (max-width: 767px) {
+  .habit-list-container {
+    flex-basis: calc(100% - 20px);
+  }
 }
-
-input[type="radio"] {
-  margin-right: 5px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-select[multiple] {
-  width: 100%;
-  height: auto;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
 </style>

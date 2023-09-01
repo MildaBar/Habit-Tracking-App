@@ -1,9 +1,6 @@
 <template>
     <!-- Delete category -->
     <section id="section">
-        <div id="exit-btn-container">
-            <button id="exit-btn" @click="navigateToMainPage">X</button>
-        </div>
         <section id="container">
             <h1>DELETE CATEGORY</h1>
 
@@ -20,17 +17,11 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
 import { ref, computed } from 'vue'
 import { useAppStore } from '../../store';
 
 const appStore = useAppStore()
 const deleteCategory = ref('')
-const router = useRouter();
-
-const navigateToMainPage = () => {
-  router.push('/');
-};
 
 const deleteSelectedCategory = () => {
     const categoryToDelete = deleteCategory.value;
@@ -45,5 +36,5 @@ const categories = computed(() => appStore.categories)
 </script>
 
 <style scoped>
-@import '../sidebarComponents/style.css'
+@import '../style.css'
 </style>

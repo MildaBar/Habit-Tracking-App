@@ -1,9 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Calendar from './components/main_content/calendar/Calendar.vue'
-import AddHabit from './components/main_content/add_habits/AddHabit.vue'
+import AddHabit from './components/main_content/navigation/navigation_components/AddHabit.vue'
 import DayHabits from './components/main_content/calendar/DayHabits.vue'
-import AddCategory from './components/main_content/sidebar/sidebarComponents/AddCategory.vue'
-import DeleteCategory from './components/main_content/sidebar/sidebarComponents/DeleteCategory.vue'
+import AddCategory from './components/main_content/navigation/navigation_components/AddCategory.vue'
+import DeleteCategory from './components/main_content/navigation/navigation_components/DeleteCategory.vue'
 
 
 const routes = [

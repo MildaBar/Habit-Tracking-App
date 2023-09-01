@@ -1,51 +1,57 @@
 <script setup>
-import { RouterView, RouterLink } from 'vue-router';
+import { RouterView } from 'vue-router';
 import Calendar from './components/main_content/calendar/Calendar.vue'
-import Header from './components/header/Header.vue'
-import Sidebar from './components/main_content/sidebar/Sidebar.vue'
+import Footer from './components/footer/Footer.vue'
+import Navigation from './components/main_content/navigation/Navigation.vue'
 </script>
-
 
 
 <template>
   <div id="app">
-    <header>
-      <Header />
-    </header>
+    <div id="navigation">
+      <Navigation />
+    </div>
     <div id="main-content-container">
       <div class="main-content">
-        <div id="sidebar">
-          <Sidebar />
+        <div id="navigation-container" style="display: flex;">
+          <div class="content">
+            <router-view />
+          </div>
         </div>
-        <div class="content">
-        <router-view />
-        </div>
-        <Calendar />
       </div>
+      <Calendar />
     </div>
+    <footer id="footer">
+      <div class="footer-div">
+        <Footer />
+      </div>
+    </footer>
   </div>
 </template>
 
 <style>
+#footer {
+  background-color: #fdc57b;
+  color: #fff;
+  padding: 10px;
+}
+
+.footer-div {
+  border: 1px solid black;
+  border-style: dashed;
+  padding: 10px;
+}
+
 #main-content-container {
   display: flex;
   font-family: monospace;
-  height: 100vh;
-  width: 100%;
-}
-
-#sidebar {
-  width: 200px;
-  background-color: #fbf2d5;
-  display: flex;
-  flex-direction: column;
   height: 100%;
-  padding: 5px;
+  width: 100%;
   align-items: flex-start;
+  margin-bottom: 20px;
 }
 
 .content {
-  padding: 20px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -56,34 +62,27 @@ import Sidebar from './components/main_content/sidebar/Sidebar.vue'
 .main-content {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: flex 0.3s ease;
+  flex-direction: column;
 }
 
+/* Media Query for Mobile Devices */
+@media (max-width: 767px) {
+  #navigation {
+    width: 100%;
+    height: 80%;
+  }
 
-/* Add habit button */
-/* .add-habit-content {
-  border-radius: 50%;
-  height: 80px;
-  width: 80px;
-  background: #fbf2d5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mobile-only-image {
+    padding: 20px;
+    display: inline;
+    margin-left: 10px;
+    width: 80%;
+    height: 80%;
+  }
+
+  .main-content {
+    flex-direction: column;
+    align-items: center;
+  }
 }
-
-#add-habit-link {
-  text-decoration: none;
-  color: black;
-}
-
-.add-habit-content:hover {
-  transform: scale(1.3);
-  background-color: #fbf2d5;
-  transition-duration: 600ms;
-  transition-timing-function: ease;
-  border: 1px solid black;
-} */
-
 </style>

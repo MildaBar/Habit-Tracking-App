@@ -1,9 +1,6 @@
 <template>
     <!-- Add new habit -->
     <section id="section">
-        <div id="exit-btn-container">
-            <button id="exit-btn" @click="navigateToMainPage">X</button>
-        </div>
         <section id="container">
             <h1>ADD NEW HABIT</h1>
             <h2>Select from habit category list:</h2>
@@ -29,16 +26,20 @@
                 <span>Selected day: {{ appStore.selectedDay }}</span>
             </div>
 
-            <button @click="addNewHabit" :disabled="!selected || habit.trim() === '' || !appStore.selectedDay">Add new habit</button>
+            <div v-if="selected && habit.trim() && appStore.selectedDay">
+                <button @click="addNewHabit">Add new habit</button>
+            </div>
+            <div v-else id="error-msg">Please provide all required information: <br> category, habit, date</div>
+
         </section>
     </section>
     <router-view />
 </template>
 
 <script setup>
-import { RouterView, useRouter } from 'vue-router';
+import { RouterView } from 'vue-router';
 import { ref, computed } from 'vue'
-import { useAppStore } from '../store';
+import { useAppStore } from '../../store';
 
 
 const appStore = useAppStore()
@@ -46,14 +47,8 @@ const appStore = useAppStore()
 const selected = ref('')
 const habit = ref('')
 
-const router = useRouter();
-
-const navigateToMainPage = () => {
-  router.push('/');
-};
-
 const addNewHabit = () => {
-   if (habit.value.trim() && selected.value !== '' ) {
+    if (habit.value.trim() && selected.value !== '' ) {
        appStore.addHabitToDay ({
            habit: habit.value,
            category: selected.value,
@@ -68,5 +63,14 @@ const categories = computed(() => appStore.categories)
 </script>
 
 <style scoped>
-@import '../sidebar/sidebarComponents/style.css'
+@import '../style.css';
+
+#error-msg {
+    border: 1px solid black;
+    padding: 1px;
+    font-size: 15px;
+    border-style: double;
+    text-align: center;
+    border-width: 5px;
+}
 </style>

@@ -1,10 +1,6 @@
 <template>
     <!-- Add new habit category -->
     <section id="section">
-        <div id="exit-btn-container">
-            <button id="exit-btn" @click="navigateToMainPage">X</button>
-        </div>
-    
     <section id="container">
         <h1>ADD NEW CATEGORY</h1>
 
@@ -18,9 +14,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useAppStore } from '../../store';
-
 
 const appStore = useAppStore()
 const category = ref('')
@@ -31,13 +26,9 @@ const addNewCategory = () => {
        category.value = '';
    }
 }
-const navigateToMainPage = () => {
-  router.push('/');
-};
-
 
 </script>
 
 <style scoped>
-@import '../sidebarComponents/style.css'
+@import '../style.css'
 </style>
