@@ -35,8 +35,21 @@
           <div class="habit-list-container" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
               <h2> CATEGORY: {{ category }}</h2>
               <div v-for="(habitItem, habitIndex) in habits" :key="habitIndex" class="habit-item">
-                  <input type="checkbox" :id="habitItem.id" v-model="habitItem.checked">
-                  <label v-show="mark" :for="habitItem.id" :class="{ 'checked-label': habitItem.checked }">{{ habitItem.habit }}</label>
+                  <input
+                  type="checkbox"
+                  :id="habitItem.id"
+                  v-model="habitItem.checked"
+                  :disabled="isFutureDay"
+                  >
+
+                  <label
+                  v-show="mark"
+                  :for="habitItem.id"
+                  :class="{ 'checked-label': habitItem.checked }"
+                  >
+                  {{ habitItem.habit }}</label>
+
+                  <label v-show="isFutureDay">You can mark/unmark habits for future days.</label>
               </div>
           </div>
       </div>
@@ -59,6 +72,26 @@ const allCategories = ref([]);
 const computedSelected = ref('');
 const mark = ref(true);
 
+// ----- future day mark / unmark
+const currentDate = new Date();
+currentDate.setHours(0, 0, 0, 0);
+
+const isPastDay = computed(() => {
+  const selectedDate = new Date(selectedDay.value);
+  return selectedDate < currentDate;
+});
+
+const isToday = computed(() => {
+  const selectedDate = new Date(selectedDay.value);
+  return selectedDate.toDateString() === currentDate.toDateString();
+});
+
+const isFutureDay = computed(() => {
+  const selectedDate = new Date(selectedDay.value);
+  return selectedDate > currentDate;
+});
+
+// ------
 const habitsByCategoryForSelectedDay = computed(() => {
   const selectedCategories = appStore.getSelectedCategories;
   const habitsByCategory = {};
@@ -141,7 +174,7 @@ return { name: day, date: weekDates[index].date };
 });
 
 const navigateToDayHabits = (day) => {
-router.push({ name: 'day', params: { dayName: day.date } });
+  router.push({ name: 'day', params: { dayName: day.date } });
 };
 
 watch(
