@@ -124,7 +124,8 @@ watch(
         :key="index"
         @click="navigateToDayHabits(day)"
       >
-        {{ day.name }}<br />
+        {{ day.name }}
+        <br />
         {{ day.date }}
       </div>
     </div>
@@ -185,7 +186,7 @@ watch(
           v-for="(habits, category) in habitsByCategoryForSelectedDay"
           :key="category"
         >
-          <h2>CATEGORY: {{ category }}</h2>
+          <h2>{{ category.toUpperCase() }}</h2>
           <div
             v-for="(habitItem, habitIndex) in habits"
             :key="habitIndex"
@@ -272,11 +273,14 @@ watch(
 
 .habit-list-container {
   flex-basis: calc(50% - 10px);
-  padding: 10px;
+  box-sizing: border-box;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #f9f9f9;
+  margin: 5px;
   margin-bottom: 20px;
+  max-width: 49%;
+  padding: 10px;
 }
 
 .habit-item {
