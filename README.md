@@ -8,7 +8,7 @@ Built with modern web technologies, including Vite, Vue 3, JavaScript, Pinia, Bo
 
 ## Features
 
-### 1. Habit Management
+### Habit Management
 
 - **Add Habits**: Users can easily add new habits to their list. Simply enter the name of the habit and choose a category that best describes it.
 
@@ -16,17 +16,17 @@ Built with modern web technologies, including Vite, Vue 3, JavaScript, Pinia, Bo
 
 - **Categorize Habits**: Organize your habits efficiently by assigning them to specific categories, making it easier to track and manage them.
 
-### 2. Habit Tracking
+### Habit Tracking
 
 - **Mark/Unmark Habits**: Track your daily progress by marking habits as completed or uncompleted. This visual representation allows you to stay motivated and monitor your consistency.
 
 - **Weekly Progress**: The application provides a weekly view, allowing users to see their habit-tracking history at a glance.
 
-### 3. Responsive Design
+### Responsive Design
 
 - **Phone and Tablet Compatibility**: The application is designed to work seamlessly on both phones and tablets, ensuring that you can access and update your habits on any device with ease.
 
-### 4. Technologies Used
+### Technologies Used
 
 - **Vite**: The application is built using Vite, a fast and opinionated build tool for modern web development, which ensures quick load times and efficient development.
 
