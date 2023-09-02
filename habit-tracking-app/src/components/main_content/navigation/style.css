@@ -5,9 +5,9 @@
 }
 
 #section {
-    background-color:  #fdc57b;
+    display: flex;
+    background-color:#fdc57b;
     padding: 10px;
-    display: block;
     align-items: center;
     height: 100%;
 }
@@ -18,4 +18,22 @@ h2 {
 
 #selected-habit {
     padding: 5px;
+}
+
+button {
+    margin-left: 10px;
+    background-color: white;
+}
+
+button:hover {
+    background-color: #fbf2d5;
+}
+
+#error-msg {
+    border: 1px solid black;
+    padding: 1px;
+    font-size: 15px;
+    border-style: double;
+    text-align: center;
+    border-width: 5px;
 }

@@ -1,11 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router';
-import Calendar from './components/main_content/calendar/Calendar.vue'
-import Footer from './components/footer/Footer.vue'
-import Navigation from './components/main_content/navigation/Navigation.vue'
-
+import Calendar from './components/main_content/calendar/Calendar.vue';
+import Footer from './components/footer/Footer.vue';
+import Navigation from './components/main_content/navigation/Navigation.vue';
 </script>
-
 
 <template>
   <div id="app">
@@ -14,7 +12,7 @@ import Navigation from './components/main_content/navigation/Navigation.vue'
     </div>
     <div id="main-content-container">
       <div class="main-content">
-        <div id="navigation-container" style="display: flex;">
+        <div id="navigation-container" style="display: flex">
           <div class="content">
             <router-view />
           </div>
@@ -55,7 +53,6 @@ import Navigation from './components/main_content/navigation/Navigation.vue'
 #main-content-container {
   display: flex;
   font-family: monospace;
-
   height: 100%;
   width: 100%;
   align-items: flex-start;
@@ -76,8 +73,7 @@ import Navigation from './components/main_content/navigation/Navigation.vue'
   flex-direction: column;
 }
 
-/* Media Query for Mobile Devices */
-@media (max-width: 767px) {
+@media (width >= 767px) {
   #navigation {
     width: 100%;
     height: 80%;
@@ -97,39 +93,3 @@ import Navigation from './components/main_content/navigation/Navigation.vue'
   }
 }
 </style>
-
-
-
-<!-- storeCategory.js
-  import { defineStore } from "pinia";
-
-export const useCategoryStore = defineStore('category', {
-    state: () => ({
-        categories: [],
-    }),
-    actions: {
-        addCategory(category) {
-            this.categories.push({
-                name: category,
-                habits: []
-            })
-        },
-    },
-});
-
-
-export const useHabitStore = defineStore('habit', {
-    state: () => ({
-        habits: [],
-    }),
-    actions: {
-        addHabit({ habit, category }) {
-            const habitObject = {
-                name: habit,
-                category,
-            };
-
-            this.habits.push(habitObject);
-        },
-    },
-}); -->

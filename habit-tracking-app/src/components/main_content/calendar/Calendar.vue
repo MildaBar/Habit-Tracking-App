@@ -1,65 +1,11 @@
-<template>
-    <section id="calendar-section">
-  <div class="calendar-container">
-    <!-- Calendar Days -->
-    <div class="col-sm" v-for="(day, index) in days" :key="index" @click="navigateToDayHabits(day)">
-      {{ day.name }}<br>
-      {{ day.date }}
-    </div>
-  </div>
-
-  <!-- Habit List -->
-  <h3>{{ appStore.selectedDay }}</h3>
-  <label v-show="isFutureDay">You can't mark/unmark habits for future days.</label>
-  <div class="habit-list">
-        <!-- Choose Category -->
-        <div id="select-category">
-      <div class="category-options">
-        <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
-        <label for="allCategories">All Categories</label>
-
-        <input type="radio" id="selected-categories" value="selected" v-model="selectedCategories">
-        <label for="selected-categories">Selected Categories</label>
-      </div>
-
-      <div v-if="selectedCategories === 'selected'" class="category-checkboxes">
-        <label v-for="newCat in appStore.categories" :key="newCat">
-          <input type="checkbox" v-model="selectedCategoryCheckboxes" :value="newCat">
-          {{ newCat }}
-        </label>
-      </div>
-      <div v-else-if="selectedCategories === 'all'" class="category-checkboxes">
-      </div>
-    </div>
-      <div class="habit-row">
-          <div class="habit-list-container" v-for="(habits, category) in habitsByCategoryForSelectedDay" :key="category">
-              <h2> CATEGORY: {{ category }}</h2>
-              <div v-for="(habitItem, habitIndex) in habits" :key="habitIndex" class="habit-item">
-                  <input
-                  type="checkbox"
-                  :id="habitItem.id"
-                  v-model="habitItem.checked"
-                  :disabled="isFutureDay"
-                  >
-
-                  <label
-                  v-show="mark"
-                  :for="habitItem.id"
-                  :class="{ 'checked-label': habitItem.checked }"
-                  >
-                  {{ habitItem.habit }}</label>
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
-</template>
-
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useAppStore } from '../store';
 import { useRouter } from 'vue-router';
-import { getCurrentDate, navigateToDay } from './calendar_components/useDateUtils';
+import {
+  getCurrentDate,
+  navigateToDay,
+} from './calendar_components/useDateUtils';
 
 const appStore = useAppStore();
 const router = useRouter();
@@ -86,7 +32,7 @@ const habitsByCategoryForSelectedDay = computed(() => {
 
   const habitsForSelectedDay = appStore.habitsByDay[appStore.selectedDay] || [];
 
-  habitsForSelectedDay.forEach((habit) => {
+  habitsForSelectedDay.forEach(habit => {
     if (selectedCategories.includes(habit.category)) {
       if (!habitsByCategory[habit.category]) {
         habitsByCategory[habit.category] = [];
@@ -118,7 +64,7 @@ watch(selectedCategoryCheckboxes, () => {
 });
 
 // Watch for changes in selectedCategories and update selectedCategoryCheckboxes
-watch(selectedCategories, (newValue) => {
+watch(selectedCategories, newValue => {
   if (newValue === 'all') {
     selectedCategoryCheckboxes.value = appStore.getAllCategories;
   } else if (newValue === 'selected') {
@@ -127,7 +73,7 @@ watch(selectedCategories, (newValue) => {
 });
 
 // Select a day, update selectedDay, appStore, and router
-const selectDay = (day) => {
+const selectDay = day => {
   selectedDay.value = day;
   appStore.setSelectedDay(day);
   router.push({ name: 'day', params: { dayName: day.date } });
@@ -136,7 +82,7 @@ const selectDay = (day) => {
 // Calculate and store the week's dates
 const weekDates = getCurrentDate();
 
-const navigateToDayHabits = (day) => {
+const navigateToDayHabits = day => {
   navigateToDay(router, day); // Pass the router object as an argument
 };
 
@@ -148,14 +94,112 @@ const days = daysOfWeek.map((day, index) => {
 // Watch for changes in the router's current route and trigger selectDay accordingly
 watch(
   () => router.currentRoute.value.params.dayName,
-  (newDayName) => {
+  newDayName => {
     if (newDayName) {
       selectDay(newDayName);
     }
-  }
+  },
 );
 </script>
 
+<template>
+  <section id="calendar-section">
+    <div class="calendar-container">
+      <!-- Calendar Days -->
+      <div
+        class="col-sm"
+        v-for="(day, index) in days"
+        :key="index"
+        @click="navigateToDayHabits(day)"
+      >
+        {{ day.name }}<br />
+        {{ day.date }}
+      </div>
+    </div>
+
+    <!-- Habit List -->
+    <h3>{{ appStore.selectedDay }}</h3>
+    <label v-show="isFutureDay"
+      >You can't mark/unmark habits for future days.</label
+    >
+    <div class="habit-list">
+      <!-- Choose Category -->
+      <div id="select-category">
+        <div class="category-options">
+          <input
+            type="radio"
+            id="allCategories"
+            value="all"
+            v-model="selectedCategories"
+          />
+          <label class="option-label" for="allCategories">All Categories</label>
+
+          <input
+            type="radio"
+            id="selected-categories"
+            value="selected"
+            v-model="selectedCategories"
+          />
+          <label class="option-label" for="selected-categories"
+            >Selected Categories</label
+          >
+        </div>
+
+        <div
+          v-if="selectedCategories === 'selected'"
+          class="category-checkboxes"
+        >
+          <label
+            class="selected-label"
+            v-for="newCat in appStore.categories"
+            :key="newCat"
+          >
+            <input
+              type="checkbox"
+              v-model="selectedCategoryCheckboxes"
+              :value="newCat"
+            />
+            {{ newCat }}
+          </label>
+        </div>
+        <div
+          v-else-if="selectedCategories === 'all'"
+          class="category-checkboxes"
+        ></div>
+      </div>
+      <div class="habit-row">
+        <div
+          class="habit-list-container"
+          v-for="(habits, category) in habitsByCategoryForSelectedDay"
+          :key="category"
+        >
+          <h2>CATEGORY: {{ category }}</h2>
+          <div
+            v-for="(habitItem, habitIndex) in habits"
+            :key="habitIndex"
+            class="habit-item"
+          >
+            <input
+              type="checkbox"
+              class="checkbox"
+              :id="habitItem.id"
+              v-model="habitItem.checked"
+              :disabled="isFutureDay"
+            />
+
+            <label
+              v-show="mark"
+              :for="habitItem.id"
+              :class="{ 'checked-label': habitItem.checked }"
+            >
+              {{ habitItem.habit }}</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
 
 <style scoped>
 /* Calendar section styles */
@@ -167,6 +211,7 @@ watch(
   width: 100%;
 }
 
+/* Caledar days */
 .calendar-container {
   display: flex;
   flex-direction: row;
@@ -193,7 +238,7 @@ watch(
   background-color: #fbf2d5;
 }
 
-/* Habit list by categories !!!!!!!!!!!! */
+/* Habit list */
 .habit-list {
   display: flex;
   flex-direction: column;
@@ -226,18 +271,29 @@ watch(
   margin: 5px 0;
 }
 
+/* Choose category */
 #select-category {
   background-color: #7fa99bb3;
   width: 100%;
   padding: 10px;
+}
+.option-label {
+  margin: 10px;
 }
 
 .checked-label {
   text-decoration: line-through;
 }
 
-/* Media Queries for Responsive Design */
-@media (max-width: 767px) {
+.checkbox {
+  margin: 10px;
+}
+
+.selected-label {
+  padding: 10px;
+}
+
+@media (width >= 767px) {
   .habit-list-container {
     flex-basis: calc(100% - 20px);
   }
