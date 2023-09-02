@@ -14,7 +14,6 @@
   <div class="habit-list">
         <!-- Choose Category -->
         <div id="select-category">
-      <!-- <h2>Habit list</h2> -->
       <div class="category-options">
         <input type="radio" id="allCategories" value="all" v-model="selectedCategories">
         <label for="allCategories">All Categories</label>
@@ -60,38 +59,27 @@
 import { ref, computed, watch } from 'vue';
 import { useAppStore } from '../store';
 import { useRouter } from 'vue-router';
+import { getCurrentDate, navigateToDay } from './calendar_components/useDateUtils';
 
-const appStore = useAppStore()
-const router = useRouter()
+const appStore = useAppStore();
+const router = useRouter();
 const selectedDay = ref('');
 const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const selectedCategories = ref('all');
 const selectedCategoryCheckboxes = ref([]);
-const allCategories = ref([]);
 const computedSelected = ref('');
 const mark = ref(true);
 
-
-// ----- future day mark / unmark
+// Check if the selected day is in the future
 const currentDate = new Date();
 currentDate.setHours(0, 0, 0, 0);
-
-const isPastDay = computed(() => {
-  const selectedDate = new Date(selectedDay.value);
-  return selectedDate < currentDate;
-});
-
-const isToday = computed(() => {
-  const selectedDate = new Date(selectedDay.value);
-  return selectedDate.toDateString() === currentDate.toDateString();
-});
 
 const isFutureDay = computed(() => {
   const selectedDate = new Date(selectedDay.value);
   return selectedDate > currentDate;
 });
 
-// ------
+// Compute habits grouped by category for the selected day
 const habitsByCategoryForSelectedDay = computed(() => {
   const selectedCategories = appStore.getSelectedCategories;
   const habitsByCategory = {};
@@ -99,93 +87,73 @@ const habitsByCategoryForSelectedDay = computed(() => {
   const habitsForSelectedDay = appStore.habitsByDay[appStore.selectedDay] || [];
 
   habitsForSelectedDay.forEach((habit) => {
-      if (selectedCategories.includes(habit.category)) {
-          if (!habitsByCategory[habit.category]) {
-              habitsByCategory[habit.category] = [];
-          }
-          habitsByCategory[habit.category].push(habit);
+    if (selectedCategories.includes(habit.category)) {
+      if (!habitsByCategory[habit.category]) {
+        habitsByCategory[habit.category] = [];
       }
+      habitsByCategory[habit.category].push(habit);
+    }
   });
 
   return habitsByCategory;
 });
 
-
+// Compute computedSelected based on selectedCategories and checkboxes
 if (selectedCategories.value === 'all') {
-computedSelected.value = 'All Categories';
+  computedSelected.value = 'All Categories';
 } else if (selectedCategories.value === 'selected') {
-computedSelected.value = appStore.categories
+  computedSelected.value = appStore.categories
     .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
     .map(cat => cat.name)
     .join(', ');
 }
 
+// Watch for changes in selectedCategoryCheckboxes and update appStore
 watch(selectedCategoryCheckboxes, () => {
-appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
-computedSelected.value = appStore.categories
+  appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
+  computedSelected.value = appStore.categories
     .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
     .map(cat => cat.name)
     .join(', ');
 });
 
+// Watch for changes in selectedCategories and update selectedCategoryCheckboxes
 watch(selectedCategories, (newValue) => {
-if (newValue === 'all') {
-  selectedCategoryCheckboxes.value = appStore.getAllCategories;
-} else if (newValue === 'selected') {
-  selectedCategoryCheckboxes.value = appStore.getSelectedCategories;
-}
+  if (newValue === 'all') {
+    selectedCategoryCheckboxes.value = appStore.getAllCategories;
+  } else if (newValue === 'selected') {
+    selectedCategoryCheckboxes.value = appStore.getSelectedCategories;
+  }
 });
 
-
+// Select a day, update selectedDay, appStore, and router
 const selectDay = (day) => {
-selectedDay.value = day;
-appStore.setSelectedDay(day);
-router.push({name: 'day', params: {dayName: day.date}})
-};
-
-const getCurrentDate = () => {
-  const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const today = new Date();
-  const currentDay = today.getUTCDay();
-
-  // Set the time zone offset to UTC+3 (EEST)
-  const timeZoneOffset = 3 * 60; // Convert to minutes
-
-  const weekDates = daysOfWeek.map((day, index) => {
-      const offset = index - currentDay + 1;
-      const date = new Date(today);
-
-      // Adjust the date and time based on the time zone offset
-      date.setUTCMinutes(date.getUTCMinutes() + timeZoneOffset);
-      date.setUTCDate(today.getUTCDate() + offset);
-
-      const dd = String(date.getUTCDate()).padStart(2, '0');
-      const mm = String(date.getUTCMonth() + 1).padStart(2, '0');
-      const yyyy = date.getUTCFullYear();
-      return { name: day, date: `${yyyy}-${mm}-${dd}` };
-  });
-
-  return weekDates;
-}
-const weekDates = getCurrentDate();
-
-const days = daysOfWeek.map((day, index) => {
-return { name: day, date: weekDates[index].date };
-});
-
-const navigateToDayHabits = (day) => {
+  selectedDay.value = day;
+  appStore.setSelectedDay(day);
   router.push({ name: 'day', params: { dayName: day.date } });
 };
 
-watch(
-() => router.currentRoute.value.params.dayName,
-(newDayName) => {
-  if (newDayName) {
-    selectDay(newDayName);
-  }
-}
-);
+// Calculate and store the week's dates
+const weekDates = getCurrentDate();
 
+const navigateToDayHabits = (day) => {
+  navigateToDay(router, day); // Pass the router object as an argument
+};
+
+// Generate an array of objects representing days of the week
+const days = daysOfWeek.map((day, index) => {
+  return { name: day, date: weekDates[index].date };
+});
+
+// Watch for changes in the router's current route and trigger selectDay accordingly
+watch(
+  () => router.currentRoute.value.params.dayName,
+  (newDayName) => {
+    if (newDayName) {
+      selectDay(newDayName);
+    }
+  }
+);
 </script>
 
 
@@ -231,6 +199,7 @@ watch(
   flex-direction: column;
   align-items: center;
   background-color: #394a51;
+  min-height: 50vh;
   width: 100%;
   padding: 20px;
   gap: 20px;
@@ -268,7 +237,6 @@ watch(
 }
 
 /* Media Queries for Responsive Design */
-
 @media (max-width: 767px) {
   .habit-list-container {
     flex-basis: calc(100% - 20px);

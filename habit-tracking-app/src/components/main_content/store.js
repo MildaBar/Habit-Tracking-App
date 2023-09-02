@@ -38,7 +38,7 @@ export const useAppStore = defineStore('app', {
                 this.categories.splice(index, 1);
                 localStorage.setItem('categories', JSON.stringify(this.categories))
             }
-        }
+        },
     },
     getters: {
         getHabitsByCategoryForSelectedDay() {

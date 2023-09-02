@@ -20,7 +20,7 @@
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
           <div id="icon-message">
             <span class="navbar-text">
-              <img src="../../../assets/bar-chart.png" width="100" height="100" alt="">
+              <img src="../../../assets/bar-chart.png" width="100" height="100" alt="bar-chart">
               Reach your goals with DAILY INPRO!
             </span>
           </div>
