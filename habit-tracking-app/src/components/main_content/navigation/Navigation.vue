@@ -75,6 +75,19 @@ import DeleteCategory from '../navigation/navigation_components/DeleteCategory.v
             DELETE CATEGORY
           </a>
         </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="help-category-tab"
+            data-toggle="tab"
+            href="#help-category"
+            role="tab"
+            aria-controls="help-category"
+            aria-selected="false"
+          >
+            Help
+          </a>
+        </li>
       </ul>
 
       <div class="tab-content" id="myTabContent">
@@ -120,6 +133,31 @@ import DeleteCategory from '../navigation/navigation_components/DeleteCategory.v
         >
           <DeleteCategory />
         </div>
+        <div
+          class="tab-pane fade"
+          id="help-category"
+          role="tabpanel"
+          aria-labelledby="help-category-tab"
+        >
+          <h3>Welcome to our Habit Tracking application!</h3>
+          <h5>
+            With this tool, you can easily establish and monitor your daily
+            habits.
+          </h5>
+          <p>
+            Start by adding your custom habits and organizing them into
+            categories that suit your lifestyle. You even have the flexibility
+            to delete categories when needed.
+          </p>
+          <p>
+            To stay on top of your progress, navigate seamlessly between the
+            days of the current week. Simply click on a day to view and mark
+            your habits as completed. However, please note that habits displayed
+            in future days cannot be marked or unmarked to maintain the
+            integrity of your habit tracking.
+          </p>
+          <p>Good luck and thank you for choosing DAILY INPRO!</p>
+        </div>
       </div>
     </div>
   </section>
@@ -149,5 +187,9 @@ import DeleteCategory from '../navigation/navigation_components/DeleteCategory.v
 
 #delete-category-tab:hover {
   background-color: rgba(255, 0, 0, 24%);
+}
+
+#help-category {
+  padding: 10px;
 }
 </style>

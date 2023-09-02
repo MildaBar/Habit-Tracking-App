@@ -1,39 +1,45 @@
 #container {
-    border: 1px solid black;
-    border-style: dashed;
-    padding: 10px;
+  border: 1px solid black;
+  border-style: dashed;
+  padding: 10px;
 }
 
 #section {
-    display: flex;
-    background-color:#fdc57b;
-    padding: 10px;
-    align-items: center;
-    height: 100%;
+  display: flex;
+  background-color: #fdc57b;
+  padding: 10px;
+  align-items: center;
+  height: 100%;
 }
 
 h2 {
-    font-size: 15px
+  font-size: 15px;
+  margin-top: 20px;
 }
 
 #selected-habit {
-    padding: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 button {
-    margin-left: 10px;
-    background-color: white;
+  margin-left: 10px;
+  background-color: white;
 }
 
 button:hover {
-    background-color: #fbf2d5;
+  background-color: #fbf2d5;
 }
 
 #error-msg {
-    border: 1px solid black;
-    padding: 1px;
-    font-size: 15px;
-    border-style: double;
-    text-align: center;
-    border-width: 5px;
+  border: 1px solid black;
+  padding: 1px;
+  font-size: 15px;
+  border-style: double;
+  text-align: center;
+  border-width: 5px;
+}
+
+h1 {
+  font-size: 30px;
 }
