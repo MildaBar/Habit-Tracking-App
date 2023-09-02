@@ -24,5 +24,5 @@ export const getCurrentDate = () => {
 };
 
 export function navigateToDay(router, day) {
-  router.push({ params: { dayName: day.date } });
+  router.push({ name: 'day', params: { dayName: day.date } });
 }

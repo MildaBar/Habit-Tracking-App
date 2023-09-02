@@ -91,8 +91,8 @@ import DeleteCategory from '../navigation/navigation_components/DeleteCategory.v
                 width="100"
                 height="100"
                 alt="bar-chart"
-              />
-              Reach your goals with DAILY INPRO!
+                id="icon-img"
+              />Reach your goals with DAILY INPRO!
             </span>
           </div>
         </div>
@@ -140,14 +140,14 @@ import DeleteCategory from '../navigation/navigation_components/DeleteCategory.v
 }
 
 #add-habit-tab:hover {
-  background-color: rgba(0 128 0 20.1%);
+  background-color: rgba(0, 128, 0, 20.1%);
 }
 
 #add-category-tab:hover {
-  background-color: rgba(255 166 0 18.7%);
+  background-color: rgba(255, 166, 0, 18.7%);
 }
 
 #delete-category-tab:hover {
-  background-color: rgba(255 0 0 24%);
+  background-color: rgba(255, 0, 0, 24%);
 }
 </style>

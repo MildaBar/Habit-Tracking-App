@@ -18,11 +18,15 @@ const mark = ref(true);
 
 // Check if the selected day is in the future
 const currentDate = new Date();
-currentDate.setHours(0, 0, 0, 0);
 
 const isFutureDay = computed(() => {
-  const selectedDate = new Date(selectedDay.value);
-  return selectedDate > currentDate;
+  try {
+    const selectedDate = new Date(selectedDay.value);
+    return selectedDate > currentDate;
+  } catch (error) {
+    console.error('Error parsing selected date:', error);
+    return false;
+  }
 });
 
 // Compute habits grouped by category for the selected day
@@ -74,16 +78,20 @@ watch(selectedCategories, newValue => {
 
 // Select a day, update selectedDay, appStore, and router
 const selectDay = day => {
-  selectedDay.value = day;
-  appStore.setSelectedDay(day);
-  router.push({ name: 'day', params: { dayName: day.date } });
+  try {
+    selectedDay.value = day;
+    appStore.setSelectedDay(day);
+    router.push({ name: 'day', params: { dayName: day.date } });
+  } catch (error) {
+    console.error('Error selecting day:', error);
+  }
 };
 
 // Calculate and store the week's dates
 const weekDates = getCurrentDate();
 
 const navigateToDayHabits = day => {
-  navigateToDay(router, day); // Pass the router object as an argument
+  navigateToDay(router, day);
 };
 
 // Generate an array of objects representing days of the week
@@ -95,8 +103,12 @@ const days = daysOfWeek.map((day, index) => {
 watch(
   () => router.currentRoute.value.params.dayName,
   newDayName => {
-    if (newDayName) {
-      selectDay(newDayName);
+    try {
+      if (newDayName) {
+        selectDay(newDayName);
+      }
+    } catch (error) {
+      console.error('Error during route change:', error);
     }
   },
 );

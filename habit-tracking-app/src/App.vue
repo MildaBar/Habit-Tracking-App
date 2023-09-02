@@ -52,7 +52,6 @@ import Navigation from './components/main_content/navigation/Navigation.vue';
 
 #main-content-container {
   display: flex;
-  font-family: monospace;
   height: 100%;
   width: 100%;
   align-items: flex-start;
