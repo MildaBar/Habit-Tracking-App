@@ -7,7 +7,7 @@ export const getCurrentDate = () => {
   const timeZoneOffset = 3 * 60;
 
   const weekDates = daysOfWeek.map((day, index) => {
-    const offset = index - currentDay + 1;
+    const offset = index - currentDay;
     const date = new Date(today);
 
     // Adjust the date and time based on the time zone offset

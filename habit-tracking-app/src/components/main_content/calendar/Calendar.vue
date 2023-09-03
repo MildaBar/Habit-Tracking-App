@@ -10,7 +10,7 @@ import {
 const appStore = useAppStore();
 const router = useRouter();
 const selectedDay = ref('');
-const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const selectedCategories = ref('all');
 const selectedCategoryCheckboxes = ref([]);
 const computedSelected = ref('');
