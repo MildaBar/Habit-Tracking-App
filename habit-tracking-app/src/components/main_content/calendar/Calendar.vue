@@ -29,33 +29,8 @@ const isFutureDay = computed(() => {
   }
 });
 
-// Compute habits grouped by category for the selected day
-const habitsByCategoryForSelectedDay = computed(() => {
-  const selectedCategories = appStore.getSelectedCategories;
-  const habitsByCategory = {};
-
-  const habitsForSelectedDay = appStore.habitsByDay[appStore.selectedDay] || [];
-
-  habitsForSelectedDay.forEach(habit => {
-    if (selectedCategories.includes(habit.category)) {
-      if (!habitsByCategory[habit.category]) {
-        habitsByCategory[habit.category] = [];
-      }
-      habitsByCategory[habit.category].push(habit);
-    }
-  });
-
-  return habitsByCategory;
-});
-
-// Watch for changes in selectedCategoryCheckboxes and update appStore
-watch(selectedCategoryCheckboxes, () => {
-  appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
-  computedSelected.value = appStore.categories
-    .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
-    .map(cat => cat.name)
-    .join(', ');
-});
+// Calculate and store the week's dates
+const weekDates = getCurrentDate();
 
 // Watch for changes in selectedCategories and update selectedCategoryCheckboxes
 watch(selectedCategories, newValue => {
@@ -76,9 +51,6 @@ const selectDay = day => {
     console.error('Error selecting day:', error);
   }
 };
-
-// Calculate and store the week's dates
-const weekDates = getCurrentDate();
 
 const navigateToDayHabits = day => {
   navigateToDay(router, day);
