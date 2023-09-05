@@ -48,16 +48,6 @@ const habitsByCategoryForSelectedDay = computed(() => {
   return habitsByCategory;
 });
 
-// Compute computedSelected based on selectedCategories and checkboxes
-if (selectedCategories.value === 'all') {
-  computedSelected.value = 'All Categories';
-} else if (selectedCategories.value === 'selected') {
-  computedSelected.value = appStore.categories
-    .filter(cat => selectedCategoryCheckboxes.value.includes(cat.name))
-    .map(cat => cat.name)
-    .join(', ');
-}
-
 // Watch for changes in selectedCategoryCheckboxes and update appStore
 watch(selectedCategoryCheckboxes, () => {
   appStore.setSelectedCategories(selectedCategoryCheckboxes.value);
